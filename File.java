@@ -10,6 +10,10 @@ public class File {
 	private double priority;
 	private String freq;
 	
+	public File(String name){
+		this.name = name;
+	}
+	
 	public File(String name, String url, String lastModif, String place, String title, String h1, String freq) {
 		this.name = name;
 		this.url = url;
