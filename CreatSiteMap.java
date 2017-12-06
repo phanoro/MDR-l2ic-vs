@@ -17,26 +17,38 @@ import data.*;
 
 public class CreatSiteMap {
 	
-	private File file;
+	File f ;
+	File d = new File("C:");
 	private static ArrayList<File> stock = new ArrayList<File>();
 	
-	public CreatSiteMap() {
-		this.setFile(new File("SiteMap"));
-		textSave();
+	public CreatSiteMap(File file, String name){
 		
-		
-	}
-	
-	private void creatArray(String place) throws FileNotFoundException{
-		
-		BufferedReader br = new BufferedReader( new FileReader (place + "promenade_fr.d"));
-		
-		
-	}
-	
-	private void textSave() {
+		this.f = new File(name+=".xml");
 		try {
-			BufferedWriter bw = new BufferedWriter(new FileWriter("SiteMap"));
+			creatArray(file);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		textSave(name);
+		
+		
+	}
+	
+	private void creatArray(File f) throws FileNotFoundException{
+		
+		BufferedReader br = new BufferedReader( new FileReader (f));
+		if (searchFile(f.getName(), d)){
+			for(int i = 0; i < d.length(); i++){
+				if(f.isFile() && (f.getName().endsWith(".html") || f.getName().endsWith(".HTML"))){
+					stock.add(f);
+				}
+			}
+		}
+	}
+	
+	private void textSave(String name) {
+		try {
+			BufferedWriter bw = new BufferedWriter(new FileWriter(name));
 			for (int index = 0; index < fileCount(); index++) {
 				if (stock.get(index).getName().contains(".html") || stock.get(index).getName().contains(".HTML")){
 					bw.write(stock.get(index).toString());
@@ -63,8 +75,7 @@ public class CreatSiteMap {
 		while (!find) {
 			int i = 0;
 			while (i < listOfSimpleFiles.size() && !find) {
-				if (listOfSimpleFiles.get(i).getName()
-						.equalsIgnoreCase(fileToFind)) {
+				if (listOfSimpleFiles.get(i).getName().equalsIgnoreCase(fileToFind)) {
 					return true;
 				} else
 					i++;
@@ -85,14 +96,6 @@ public class CreatSiteMap {
 	
 	public int fileCount() {
 		return stock.size();
-	}
-
-	public File getFile() {
-		return this.file;
-	}
-
-	public void setFile(File file) {
-		this.file = file;
 	}
 	
 }
