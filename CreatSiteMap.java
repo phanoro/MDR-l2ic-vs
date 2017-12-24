@@ -1,5 +1,7 @@
 package core;
 
+import data.SiteMapComponents;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,95 +9,73 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.net.MalformedURLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Vector;
-
-import data.*;
 
 public class CreatSiteMap {
 	
-	File f ;
-	File d = new File("C:");
-	private static ArrayList<File> stock = new ArrayList<File>();
+	ArrayList<SiteMapComponents> stock;
 	
-	public CreatSiteMap(File file, String name){
-		
-		this.f = new File(name+=".xml");
-		try {
-			creatArray(file);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		textSave(name);
-		
-		
+	public CreatSiteMap(){
+		stock = new ArrayList<SiteMapComponents>();
 	}
 	
-	private void creatArray(File f) throws FileNotFoundException{
-		
-		BufferedReader br = new BufferedReader( new FileReader (f));
-		if (searchFile(f.getName(), d)){
-			for(int i = 0; i < d.length(); i++){
-				if(f.isFile() && (f.getName().endsWith(".html") || f.getName().endsWith(".HTML"))){
-					stock.add(f);
-				}
+	public void creatArray(String fileName, File file) throws MalformedURLException{
+		if (file.isFile() && file.getName().endsWith(".html") && file.canRead()) {
+			SiteMapComponents c = new SiteMapComponents();
+			c.setDate(new SimpleDateFormat("dd-MM-yyyy HH-mm-ss").format((file.lastModified())));
+			c.setUrl(file.getName());
+			stock.add(c);
+			System.out.println(stock.size());
+		}
+		else if (file.isDirectory()) {
+			File[] contenu	= file.listFiles();
+			for(int i=0; i < contenu.length; i++) {
+				creatArray(fileName + "/" + contenu[i].getName(), contenu[i]);
 			}
 		}
 	}
 	
-	private void textSave(String name) {
-		try {
-			BufferedWriter bw = new BufferedWriter(new FileWriter(name));
-			for (int index = 0; index < fileCount(); index++) {
-				if (stock.get(index).getName().contains(".html") || stock.get(index).getName().contains(".HTML")){
-					bw.write(stock.get(index).toString());
-					bw.newLine();
-				}
+	public void createSiteMap(String name){
+		try{
+			BufferedWriter bw =new BufferedWriter(new FileWriter(name+".xml")); 
+			bw.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+			bw.newLine();
+			bw.write("<urlset xmlns=\"????\">");//Truc Ã  rajouter
+			bw.newLine();
+			for (int index = 0; index < stock.size(); index++){
+				bw.write("\t<url>\n\t\t<loc>" + stock.get(index).getUrl() + "<\\loc>\n"
+						+ "\t\t<lastmod>" + stock.get(index).getDate() + "<\\lastmod>\n"
+						+ "\t\t<changefreq>" + stock.get(index).getFreqChg() + "<\\changefreq>\n"
+						+ "\t\t<priority>" + stock.get(index).getPrio() + "<\\priority>\n"
+						+ "\t<\\url>");
+				bw.newLine();
 			}
+			bw.write("<\\urlset>");
 			bw.close();
-		} catch (IOException e) {
+		}catch (FileNotFoundException e){
+			System.err.println(e.getMessage());
+		}catch (IOException e){
 			System.err.println(e.getMessage());
 		}
 	}
 	
-	public boolean searchFile(String fileToFind, File searchIn) {
-		File[] listOfFiles = searchIn.listFiles();
-		Vector<File> listOfDirectories = new Vector<File>();
-		Vector<File> listOfSimpleFiles = new Vector<File>();
-		for (File file : listOfFiles) {
-			if (file.isDirectory())
-				listOfDirectories.add(file);
-			else
-				listOfSimpleFiles.add(file);		
+	public void textRead(String name) throws IOException{
+		
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(name));
+			for (int index = 0; index < stock.size(); index++) {
+				br.toString();
+			}
+			br.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		boolean find = false;
-		while (!find) {
-			int i = 0;
-			while (i < listOfSimpleFiles.size() && !find) {
-				if (listOfSimpleFiles.get(i).getName().equalsIgnoreCase(fileToFind)) {
-					return true;
-				} else
-					i++;
-			}
-			int j = 0;
-			while ((j < listOfDirectories.size()) && !find) {
-				if(listOfDirectories.get(j).getName().equalsIgnoreCase(fileToFind))
-					return true;
-				else if(searchFile(fileToFind, listOfDirectories.get(j)))
-					return true;
-				else
-					j++;
-			}
-			return false;
-		}		
-		return false;
+		
 	}
-	
-	public int fileCount() {
-		return stock.size();
-	}
-	
 }
+
+
+
