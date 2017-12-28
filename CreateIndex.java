@@ -8,7 +8,12 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-
+/**
+ * 
+ * @author Virginie/Stéphane
+ * @version 1.0
+ *
+ */
 public class CreateIndex {
 	
 	private ArrayList<HtmlSiteMapComponents> index;
@@ -16,7 +21,11 @@ public class CreateIndex {
 	public CreateIndex() {
 		this.index = new ArrayList<HtmlSiteMapComponents>() ;
 	}
-	
+	/**
+	 * 
+	 * @param fileName
+	 * @param file
+	 */
 	public void createArray(String fileName, File file){
 		if (file.isFile() && file.getName().endsWith(".html") && file.canRead()) {
 			HtmlSiteMapComponents c = new HtmlSiteMapComponents();
