@@ -3,12 +3,19 @@ package test;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
-
+/**
+ * 
+ * @author Virginie/Stéphane
+ *
+ */
 public class ListingTest {
 	public static void main(String[]args){
 		init("SiteMap");
 	}
-	
+	/**
+	 * 
+	 * @param name
+	 */
 	public static void init(String name){
 		
 		JFrame frame = new JFrame("");
