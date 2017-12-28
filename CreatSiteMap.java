@@ -1,5 +1,9 @@
 package core;
 
+/**
+ * @author Virginie/Stéphane
+ * @version 1.0
+ */
 import data.SiteMapComponents;
 
 import java.io.BufferedReader;
@@ -20,7 +24,12 @@ public class CreatSiteMap {
 	public CreatSiteMap(){
 		stock = new ArrayList<SiteMapComponents>();
 	}
-	
+	/**
+	 * 
+	 * @param fileName
+	 * @param file
+	 * @throws MalformedURLException
+	 */
 	public void creatArray(String fileName, File file) throws MalformedURLException{
 		if (file.isFile() && file.getName().endsWith(".html") && file.canRead()) {
 			SiteMapComponents c = new SiteMapComponents();
@@ -36,13 +45,16 @@ public class CreatSiteMap {
 			}
 		}
 	}
-	
+	/**
+	 * 
+	 * @param name
+	 */
 	public void createSiteMap(String name){
 		try{
 			BufferedWriter bw =new BufferedWriter(new FileWriter(name+".xml")); 
 			bw.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			bw.newLine();
-			bw.write("<urlset xmlns=\"????\">");//Truc �  rajouter
+			bw.write("<urlset xmlns=\"????\">");//Truc Ã  rajouter
 			bw.newLine();
 			for (int index = 0; index < stock.size(); index++){
 				bw.write("\t<url>\n\t\t<loc>" + stock.get(index).getUrl() + "<\\loc>\n"
@@ -60,7 +72,11 @@ public class CreatSiteMap {
 			System.err.println(e.getMessage());
 		}
 	}
-	
+	/**
+	 * 
+	 * @param name
+	 * @throws IOException
+	 */
 	public void textRead(String name) throws IOException{
 		
 		try {
@@ -76,6 +92,8 @@ public class CreatSiteMap {
 		
 	}
 }
+
+
 
 
 
