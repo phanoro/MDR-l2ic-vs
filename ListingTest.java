@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 /**
  * 
  * @author Virginie/Stéphane
- *
+ * @version 1.0
  */
 public class ListingTest {
 	public static void main(String[]args){
