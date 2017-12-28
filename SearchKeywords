@@ -1,0 +1,46 @@
+/**
+ * 
+ */
+package projet1;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+//import html site components here ( aka la classe où l'on crée l'index puisque qu'il
+//va servir de base à notre moteur de recherche
+//import aussi la classe test , si c'est possible. on aura besoin du mot clé rentré
+//par l'utilisateur
+/**
+ * @author Virginie/Stéphane
+ * @version 1.0
+ *
+ */
+public class SearchKeywords {
+		
+	/**
+	 * 
+	 * @param keyword
+	 * @param filename
+	 * @throws IOException fichier non trouvé
+	 */
+	public void fileRead(String keyword, String filename) throws IOException{
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(filename));
+			String line;
+			while ((line = br.readLine()) != null) {
+				if(line.contains(keyword)) {
+					br.toString();
+				}
+			}
+	   }catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			 }
+	}
+}
+			 
+			 
+			 
+
