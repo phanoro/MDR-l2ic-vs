@@ -28,7 +28,7 @@ public class CreatSiteMap {
 	 * 
 	 * @param fileName
 	 * @param file
-	 * @throws MalformedURLException
+	 * @throws MalformedURLException si jamais l'url est mal formée
 	 */
 	public void creatArray(String fileName, File file) throws MalformedURLException{
 		if (file.isFile() && file.getName().endsWith(".html") && file.canRead()) {
