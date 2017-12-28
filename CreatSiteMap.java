@@ -75,7 +75,7 @@ public class CreatSiteMap {
 	/**
 	 * 
 	 * @param name
-	 * @throws IOException
+	 * @throws IOException si le fichier n'est pas trouvé
 	 */
 	public void textRead(String name) throws IOException{
 		
